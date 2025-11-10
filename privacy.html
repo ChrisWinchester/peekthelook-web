@@ -46,17 +46,87 @@
               >How It Works</a
             >
             <a
+              href="pricing.html"
+              class="text-gray-700 hover:text-purple-600 transition"
+              >Pricing</a
+            >
+            <a
               href="index.html#download"
               class="text-gray-700 hover:text-purple-600 transition"
               >Download</a
             >
           </div>
-          <a
-            href="index.html"
-            class="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition"
-          >
-            Back to Home
-          </a>
+          <div class="flex items-center space-x-4">
+            <a
+              href="index.html"
+              class="hidden md:block bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition"
+            >
+              Back to Home
+            </a>
+            <!-- Hamburger Menu Button -->
+            <button
+              id="mobile-menu-button"
+              class="md:hidden text-gray-700 hover:text-purple-600 focus:outline-none focus:text-purple-600 transition"
+              aria-label="Toggle menu"
+            >
+              <svg
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  id="menu-icon"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+                <path
+                  id="close-icon"
+                  class="hidden"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div
+          id="mobile-menu"
+          class="hidden md:hidden pb-4 border-t border-gray-200 mt-2"
+        >
+          <div class="flex flex-col space-y-3 pt-4">
+            <a
+              href="index.html#features"
+              class="text-gray-700 hover:text-purple-600 transition px-2 py-2 rounded-lg hover:bg-gray-50"
+              >Features</a
+            >
+            <a
+              href="index.html#how-it-works"
+              class="text-gray-700 hover:text-purple-600 transition px-2 py-2 rounded-lg hover:bg-gray-50"
+              >How It Works</a
+            >
+            <a
+              href="pricing.html"
+              class="text-gray-700 hover:text-purple-600 transition px-2 py-2 rounded-lg hover:bg-gray-50"
+              >Pricing</a
+            >
+            <a
+              href="index.html#download"
+              class="text-gray-700 hover:text-purple-600 transition px-2 py-2 rounded-lg hover:bg-gray-50"
+              >Download</a
+            >
+            <a
+              href="index.html"
+              class="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition mt-2 text-left"
+            >
+              Back to Home
+            </a>
+          </div>
         </div>
       </div>
     </nav>
@@ -391,6 +461,32 @@
         </div>
       </div>
     </footer>
+
+    <script>
+      // Mobile menu toggle
+      const mobileMenuButton = document.getElementById("mobile-menu-button");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const menuIcon = document.getElementById("menu-icon");
+      const closeIcon = document.getElementById("close-icon");
+
+      if (mobileMenuButton) {
+        mobileMenuButton.addEventListener("click", function () {
+          mobileMenu.classList.toggle("hidden");
+          menuIcon.classList.toggle("hidden");
+          closeIcon.classList.toggle("hidden");
+        });
+
+        // Close mobile menu when clicking on a link
+        const mobileMenuLinks = mobileMenu.querySelectorAll("a");
+        mobileMenuLinks.forEach((link) => {
+          link.addEventListener("click", function () {
+            mobileMenu.classList.add("hidden");
+            menuIcon.classList.remove("hidden");
+            closeIcon.classList.add("hidden");
+          });
+        });
+      }
+    </script>
   </body>
 </html>
 
