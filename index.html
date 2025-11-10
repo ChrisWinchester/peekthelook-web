@@ -54,6 +54,35 @@
         transform: translateY(-5px);
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
       }
+
+      .rotating-text {
+        min-height: 1.2em;
+        display: inline-block;
+        position: relative;
+        width: 100%;
+      }
+
+      .rotating-text span {
+        display: inline-block;
+        width: 100%;
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+        transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+
+      .rotating-text span.active {
+        position: relative;
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+
+      .rotating-text span.fade-out {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.95);
+      }
     </style>
   </head>
   <body class="bg-gray-50">
@@ -164,7 +193,9 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center fade-in">
           <h1 class="text-4xl md:text-6xl font-bold mb-6">
-            Try On Before You Buy
+            <span class="rotating-text" id="rotating-text">
+              <span class="active">Try On Before You Buy</span>
+            </span>
           </h1>
           <p class="text-xl md:text-2xl mb-8 text-purple-100 max-w-3xl mx-auto">
             Experience the future of fashion with our AI-powered virtual try-on
@@ -426,13 +457,19 @@
             <h4 class="text-white font-semibold mb-4">Product</h4>
             <ul class="space-y-2 text-sm">
               <li>
-                <a href="#features" class="hover:text-white transition">Features</a>
+                <a href="#features" class="hover:text-white transition"
+                  >Features</a
+                >
               </li>
               <li>
-                <a href="pricing.html" class="hover:text-white transition">Pricing</a>
+                <a href="pricing.html" class="hover:text-white transition"
+                  >Pricing</a
+                >
               </li>
               <li>
-                <a href="#how-it-works" class="hover:text-white transition">How It Works</a>
+                <a href="#how-it-works" class="hover:text-white transition"
+                  >How It Works</a
+                >
               </li>
             </ul>
           </div>
@@ -450,10 +487,14 @@
             <h4 class="text-white font-semibold mb-4">Legal</h4>
             <ul class="space-y-2 text-sm">
               <li>
-                <a href="privacy.html" class="hover:text-white transition">Privacy Policy</a>
+                <a href="privacy.html" class="hover:text-white transition"
+                  >Privacy Policy</a
+                >
               </li>
               <li>
-                <a href="terms.html" class="hover:text-white transition">Terms & Conditions</a>
+                <a href="terms.html" class="hover:text-white transition"
+                  >Terms & Conditions</a
+                >
               </li>
               <li>
                 <a href="#" class="hover:text-white transition">Security</a>
@@ -489,6 +530,67 @@
           closeIcon.classList.add("hidden");
         });
       });
+
+      // Rotating text animation
+      const rotatingTextContainer = document.getElementById("rotating-text");
+      const textVariations = [
+        "Try On Before You Buy",
+        "Visualize It Before You Buy",
+        "Share Your Style",
+        "Post Your Looks",
+        "Visualize Your Style",
+        "Find Your Perfect Fit",
+        "Style Without Limits",
+        "Try Before You Commit",
+        "Buy With Confidence",
+        "Share Your Outfits",
+        "Post Your Try-Ons",
+        "Discover New Styles",
+        "Buy What Fits Perfect",
+        "Share Your Fashion",
+        "Post Your Best Looks",
+        "Try, Share, Love",
+      ];
+
+      let currentIndex = 0;
+
+      function rotateText() {
+        const currentSpan = rotatingTextContainer.querySelector(".active");
+
+        if (currentSpan) {
+          // Fade out current text
+          currentSpan.classList.remove("active");
+          currentSpan.classList.add("fade-out");
+
+          // After fade out completes, change text and fade in
+          setTimeout(() => {
+            // Move to next text
+            currentIndex = (currentIndex + 1) % textVariations.length;
+
+            // Remove old span
+            rotatingTextContainer.innerHTML = "";
+
+            // Create new span with next text
+            const newSpan = document.createElement("span");
+            newSpan.textContent = textVariations[currentIndex];
+            rotatingTextContainer.appendChild(newSpan);
+
+            // Trigger reflow to ensure initial state is applied
+            void newSpan.offsetWidth;
+
+            // Add active class to trigger fade-in animation
+            setTimeout(() => {
+              newSpan.classList.add("active");
+            }, 10);
+          }, 600); // Wait for fade-out transition to complete
+        }
+      }
+
+      // Start rotating text every 3 seconds (after initial 3 second delay)
+      setTimeout(() => {
+        rotateText();
+        setInterval(rotateText, 3000);
+      }, 3000);
 
       // Smooth scrolling for navigation links
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
